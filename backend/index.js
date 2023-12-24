@@ -20,15 +20,15 @@ app.use(express.json());
 
 //CORS POLICY MiddleWare
 //Option 1: Allow all origins with default of Cors(*)
-// app.use(cors());
+app.use(cors());
 //Option 2: Allow Custom Origins ---- This method is preffered as you have more control...
-app.use(
-    cors({
-        origin: "http://localhost:5000",
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type"],
-    })
-);
+// app.use(
+//     cors({
+//         origin: "http://localhost:5000",
+//         methods: ["GET", "POST", "PUT", "DELETE"],
+//         allowedHeaders: ["Content-Type"],
+//     })
+// );
 
 const PORT = process.env.PORT;
 const mongoDBURL = process.env.mongoDBURL;
