@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 import { useParams } from "react-router-dom";
-import backButton from "../components/backButton";
+import BackButton from "../components/backButton";
 
 const ShowBook = () => {
     const [book, setBooks] = useState([]);
@@ -25,7 +25,8 @@ const ShowBook = () => {
     }, []);
     return (
         <div className="p-4">
-            <backButton />
+            <BackButton />
+
             <h1 className="text-3xl my-4"> Show Book </h1>
 
             {loading ? (
