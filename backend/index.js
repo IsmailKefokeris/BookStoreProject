@@ -53,6 +53,6 @@ mongoose
         console.log(error);
     });
 
-export const config = {
-    runtime: "experimental-edge",
-};
+// export const config = {
+//     runtime: "experimental-edge",
+// };
