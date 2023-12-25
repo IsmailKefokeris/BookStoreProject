@@ -11,6 +11,10 @@ import { Book } from "./models/bookModel.js";
 //Routes Import
 import booksRoute from "./routes/booksRoute.js";
 
+//Firebase
+import { https } from "firebase-functions";
+//https://www.youtube.com/watch?v=LW26kpjGl2c
+
 dotenv.config();
 
 const app = express();
@@ -30,8 +34,8 @@ app.use(cors());
 //     })
 // );
 
-const PORT = process.env.PORT;
-const mongoDBURL = process.env.mongoDBURL;
+const LOCALPORT = process.env.LOCALPORT;
+const MONGODBURL = process.env.MONGODBURL;
 
 app.get("/", (req, res) => {
     console.log("Root...");
@@ -42,13 +46,15 @@ app.get("/", (req, res) => {
 app.use("/books", booksRoute);
 
 mongoose
-    .connect(mongoDBURL)
+    .connect(MONGODBURL)
     .then(() => {
         console.log("Database Connected...");
-        app.listen(PORT, () => {
-            console.log(`App Started at port: ${PORT}`);
+        app.listen(LOCALPORT, () => {
+            console.log(`App Started at port: ${LOCALPORT}`);
         });
     })
     .catch((error) => {
         console.log(error);
     });
+
+export const api = https.onRequest(app);
