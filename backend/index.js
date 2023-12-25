@@ -35,7 +35,7 @@ const MONGODBURL = process.env.MONGODBURL;
 
 app.get("/", (req, res) => {
     console.log("Root...");
-    return res.status(200).send("Welcome to Book Store Project");
+    return res.status(200).json({ message: "Welcome to Book Store Project" });
 });
 
 //Routes
