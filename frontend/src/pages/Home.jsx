@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../components/Spinner";
+import NavBar from "../components/navBar";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
@@ -24,6 +25,7 @@ const Home = () => {
     }, []);
     return (
         <div className="p-4">
+            <NavBar />
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl my-8">Books List</h1>
 
