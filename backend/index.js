@@ -52,7 +52,3 @@ mongoose
     .catch((error) => {
         console.log(error);
     });
-
-// export const config = {
-//     runtime: "experimental-edge",
-// };
