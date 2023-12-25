@@ -1,5 +1,6 @@
 {
     "version":2,
     "builds": [{"src": "./index.js", "use": "@vercel/node"}],
-    "routes": [{"src": "/(.*)", "dest": "/"}]
+    "routes": [{"src": "/(.*)", "dest": "/"}],
+    "regions": ["arn1", "cdg1", "dub1", "fra1", "lhr1"]
 }
