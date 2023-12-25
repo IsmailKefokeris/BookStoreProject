@@ -11,10 +11,6 @@ import { Book } from "./models/bookModel.js";
 //Routes Import
 import booksRoute from "./routes/booksRoute.js";
 
-//Firebase
-import { https } from "firebase-functions";
-//https://www.youtube.com/watch?v=LW26kpjGl2c
-
 dotenv.config();
 
 const app = express();
@@ -39,7 +35,17 @@ const MONGODBURL = process.env.MONGODBURL;
 
 app.get("/", (req, res) => {
     console.log("Root...");
-    return res.status(254).send("Welcome to Book Store Project");
+    return new Response(
+        JSON.stringify({
+            message: "Welcome to Book Store Project",
+        }),
+        {
+            status: 200,
+            headers: {
+                "content-type": "application/json",
+            },
+        }
+    );
 });
 
 //Routes
@@ -57,4 +63,6 @@ mongoose
         console.log(error);
     });
 
-export const api = https.onRequest(app);
+export const config = {
+    runtime: "experimental-edge",
+};
