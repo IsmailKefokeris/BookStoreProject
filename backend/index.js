@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 
 //Middleware for parsing request body
-app.use(express.json());
+// app.use(express.json());
 
 //CORS POLICY MiddleWare
 //Option 1: Allow all origins with default of Cors(*)
