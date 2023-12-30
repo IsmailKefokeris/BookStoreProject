@@ -12,6 +12,11 @@ router.post("/", async (req, res) => {
                 message: "All Fields must be completed!",
             });
         }
+        if (req.body.publishYear > 2023 || req.body.publishYear < 1500) {
+            return res.status(400).send({
+                message: "Date must be between 1500 and 2023",
+            });
+        }
         const newBook = {
             title: req.body.title,
             author: req.body.author,
