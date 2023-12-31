@@ -10,10 +10,13 @@ import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 const Home = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const serverURL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+
     useEffect(() => {
         setLoading(true);
         axios
-            .get("https://book-store-project-server.vercel.app/books")
+            .get(`${serverURL}/books`)
             .then((response) => {
                 setBooks(response.data.data);
                 setLoading(false);
