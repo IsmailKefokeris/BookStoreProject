@@ -98,7 +98,7 @@ router.delete("/:id", async (req, res) => {
 
         return res
             .status(200)
-            .send({ message: `The Book ${result.title} has been Deleted!` });
+            .send({ message: `The Book  ${result.title}  has been Deleted!` });
     } catch (error) {
         console.log(error.message);
         res.status(500).send({ message: error.message });
