@@ -18,12 +18,14 @@ const CreateBooks = () => {
 
     const[error, setError] = useState("")
 
+    const serverURL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+
     const navigate = useNavigate();
 
     const handleSubmit = () => {
         setLoading(true);
         axios
-            .post("https://book-store-project-server.vercel.app/books", {title: title, author: author, publishYear: publishYear})
+            .post(`${serverURL}/books`, {title: title, author: author, publishYear: publishYear})
             .then((response) => {
                 console.log(response);
                 setLoading(false);

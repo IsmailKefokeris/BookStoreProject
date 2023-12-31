@@ -8,12 +8,14 @@ const ShowBook = () => {
     const [book, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const serverURL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+
     const { id } = useParams();
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`https://book-store-project-server.vercel.app/books/${id}`)
+            .get(`${serverURL}/books/${id}`)
             .then((response) => {
                 setBooks(response.data);
                 setLoading(false);
