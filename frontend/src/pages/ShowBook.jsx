@@ -3,6 +3,7 @@ import axios from "axios";
 import Spinner from "../components/Spinner";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/backButton";
+import NavBar from "../components/NavBar";
 
 const ShowBook = () => {
     const [book, setBooks] = useState([]);
@@ -27,6 +28,7 @@ const ShowBook = () => {
     }, []);
     return (
         <div className="p-4">
+            <NavBar />
             <BackButton />
 
             <h1 className="text-3xl my-4"> Show Book </h1>
