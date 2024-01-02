@@ -5,12 +5,16 @@ import BackButton from '../components/backButton';
 import Spinner from '../components/Spinner';
 import NavBar from '../components/NavBar';
 
+import { useSnackbar } from "notistack";
+
 //DeleteBook
 const DeleteBook = () => {
   const [responseMessage, setResponse] = useState();
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const {enqueueSnackbar} = useSnackbar();
+
 
   const { id } = useParams();
 
@@ -22,13 +26,15 @@ const DeleteBook = () => {
       .delete(`${serverURL}/books/${id}`)
       .then((response) => {
         setResponse(response.data.message);
-        alert(response.data.message);
+        // alert(response.data.message);
         setLoading(false);
+        enqueueSnackbar("Book Deleted Successfully!", {variant: "success"})
         navigate(`/`);
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
+        enqueueSnackbar("Error Deleting Book!", {variant: "error"})
       })
   }
   

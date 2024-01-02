@@ -5,6 +5,9 @@ import { useParams } from "react-router-dom";
 import BackButton from "../components/backButton";
 import NavBar from "../components/NavBar";
 
+import { useSnackbar } from "notistack";
+
+
 const ShowBook = () => {
     const [book, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -13,6 +16,8 @@ const ShowBook = () => {
 
     const { id } = useParams();
 
+    const {enqueueSnackbar} = useSnackbar();
+
     useEffect(() => {
         setLoading(true);
         axios
@@ -20,10 +25,13 @@ const ShowBook = () => {
             .then((response) => {
                 setBooks(response.data);
                 setLoading(false);
+                enqueueSnackbar("Book Loaded!", {variant: "success"})
             })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
+                enqueueSnackbar("Error loading book!", {variant: "error"})
+
             });
     }, []);
     return (

@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { TiTick } from "react-icons/ti";
 import axios from "axios";
 
+import { useSnackbar } from "notistack";
+
 
 
 const EditBook = () => {
@@ -24,6 +26,8 @@ const EditBook = () => {
 
     const navigate = useNavigate();
 
+    const {enqueueSnackbar} = useSnackbar();
+
     useEffect(() => {
       setLoading(true)
       axios.get(`${serverURL}/books/${id}`)
@@ -35,7 +39,7 @@ const EditBook = () => {
         })
         .catch((error) => {
           console.log(error)
-          alert("An Error has occured check console...")
+          // alert("An Error has occured check console...")
           setLoading(false)
         })
     }, [])
@@ -48,11 +52,13 @@ const EditBook = () => {
                 console.log(response);
                 setLoading(false);
                 navigate(`/`);
+                enqueueSnackbar("Book Updated Successfully!", {variant: "success"})
             })
             .catch((error) => {
                 setLoading(false);
                 console.log(error);
                 setError(error.response.data.message)
+                enqueueSnackbar("Error updating book!", {variant: "error"})
             })
     };
 

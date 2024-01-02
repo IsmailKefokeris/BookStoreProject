@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { TiTick } from "react-icons/ti";
 import axios from "axios";
 
-
+import { useSnackbar } from "notistack";
 
 const CreateBooks = () => {
     const[title, setTitle] = useState();
@@ -21,6 +21,7 @@ const CreateBooks = () => {
     const serverURL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
     const navigate = useNavigate();
+    const {enqueueSnackbar} = useSnackbar();
 
     const handleSubmit = () => {
         setLoading(true);
@@ -29,11 +30,13 @@ const CreateBooks = () => {
             .then((response) => {
                 console.log(response);
                 setLoading(false);
+                enqueueSnackbar("Book Created Successfully!", {variant: "success"})
                 navigate(`/books/details/${response.data._id}`);
             })
             .catch((error) => {
                 setLoading(false);
                 console.log(error);
+                enqueueSnackbar("Error Creating Book!", {variant: "error"})
                 setError(error.response.data.message)
             })
     };
