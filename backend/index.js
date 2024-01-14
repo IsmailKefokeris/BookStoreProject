@@ -1,15 +1,25 @@
-import express from "express";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-//https://medium.com/google-cloud/migrating-collections-from-mongodb-to-cloud-firestore-dfeff15f1c8
-//migrate from MongoDB to Firebase??
-import cors from "cors";
+// import express from "express";
+// import dotenv from "dotenv";
+// import mongoose from "mongoose";
+// //https://medium.com/google-cloud/migrating-collections-from-mongodb-to-cloud-firestore-dfeff15f1c8
+// //migrate from MongoDB to Firebase??
+// import cors from "cors";
 
-//Import Models
-import { Book } from "./models/bookModel.js";
+const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-//Routes Import
-import booksRoute from "./routes/booksRoute.js";
+// //Import Models
+// import { Book } from "./models/bookModel.js";
+
+// //Routes Import
+// import booksRoute from "./routes/booksRoute.js";
+// import paymentsRoute from "./routes/paymentsRoute.js";
+
+const Book = require("./models/bookModel");
+const booksRoute = require("./routes/booksRoute.js");
+const paymentsRoute = require("./routes/paymentsRoute.js");
 
 dotenv.config();
 
@@ -40,6 +50,8 @@ app.get("/", (req, res) => {
 
 //Routes
 app.use("/books", booksRoute);
+
+app.use("/payments", paymentsRoute);
 
 mongoose
     .connect(MONGODBURL)

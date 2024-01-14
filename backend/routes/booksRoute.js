@@ -1,5 +1,8 @@
-import express from "express";
-import { Book } from "../models/bookModel.js";
+// import express from "express";
+// import { Book } from "../models/bookModel.js";
+
+const express = require("express");
+const Book = require("../models/bookModel");
 
 const router = express.Router();
 
@@ -100,4 +103,6 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-export default router;
+// export default router;
+
+module.exports = router;
