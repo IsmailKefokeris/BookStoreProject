@@ -15,6 +15,11 @@ router.post("/", async (req, res) => {
                 message: "All Fields must be completed!",
             });
         }
+        if (req.body.publishYear > 2023 || req.body.publishYear < 1500) {
+            return res.status(400).send({
+                message: "Date must be between 1500 and 2023",
+            });
+        }
         const newBook = {
             title: req.body.title,
             author: req.body.author,
@@ -23,7 +28,7 @@ router.post("/", async (req, res) => {
 
         const book = await Book.create(newBook);
 
-        return res.status(201).send(book);
+        return res.status(200).send(book);
     } catch (error) {
         console.log(error.message);
         res.status(500).send({ message: error.message });
@@ -96,7 +101,7 @@ router.delete("/:id", async (req, res) => {
 
         return res
             .status(200)
-            .send({ message: `The Book ${result.title} has been Deleted!` });
+            .send({ message: `The Book  ${result.title}  has been Deleted!` });
     } catch (error) {
         console.log(error.message);
         res.status(500).send({ message: error.message });

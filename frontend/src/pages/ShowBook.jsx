@@ -3,28 +3,40 @@ import axios from "axios";
 import Spinner from "../components/Spinner";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/backButton";
+import NavBar from "../components/NavBar";
+
+import { useSnackbar } from "notistack";
+
 
 const ShowBook = () => {
     const [book, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const serverURL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+
     const { id } = useParams();
+
+    const {enqueueSnackbar} = useSnackbar();
 
     useEffect(() => {
         setLoading(true);
         axios
-            .get(`http://localhost:5000/books/${id}`)
+            .get(`${serverURL}/books/${id}`)
             .then((response) => {
                 setBooks(response.data);
                 setLoading(false);
+                enqueueSnackbar("Book Loaded!", {variant: "success"})
             })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
+                enqueueSnackbar("Error loading book!", {variant: "error"})
+
             });
     }, []);
     return (
         <div className="p-4">
+            <NavBar />
             <BackButton />
 
             <h1 className="text-3xl my-4"> Show Book </h1>
