@@ -16,6 +16,16 @@ const bookSchema = mongoose.Schema(
             type: Number,
             required: true,
         },
+        quantity: {
+            type: Number,
+            required: false,
+            default: 1,
+        },
+        price: {
+            type: Number,
+            required: false,
+            default: 5.0,
+        },
     },
     {
         timestamps: true,

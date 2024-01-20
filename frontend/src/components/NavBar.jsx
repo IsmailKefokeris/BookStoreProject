@@ -13,7 +13,7 @@ const NavBar = () => {
                         <li>
                             <Link to="/">
                                 <a
-                                    href="#"
+                                    href="/"
                                     className="block py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:p-0 hover:text-blue-700"
                                     aria-current="page"
                                 >
@@ -33,13 +33,13 @@ const NavBar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/workshop">
+                            <Link to="/cart">
                                 <a
                                     href="#"
                                     className="block py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:p-0 hover:text-blue-700"
                                     aria-current="page"
                                 >
-                                    Workshop
+                                    Shopping Cart
                                 </a>
                             </Link>
                         </li>

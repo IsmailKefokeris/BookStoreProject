@@ -10,12 +10,17 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 
+import { useSelector } from "react-redux";
+
 const Home = () => {
+    const cart = useSelector((state) => state.cart);
+
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [showType, setShowType] = useState()
+    const [showType, setShowType] = useState();
 
-    const serverURL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+    const serverURL =
+        import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
     useEffect(() => {
         setLoading(true);
@@ -33,10 +38,20 @@ const Home = () => {
     return (
         <div className="p-4">
             <NavBar />
-
             <div className="p-4 flex flex-row justify-center items-center gap-x-4">
-                <button className="p-4 bg-sky-300 hover:bg-sky-600 rounded-lg" onClick={() => setShowType("table")}>Table</button>
-                <button className="p-4 bg-sky-300 hover:bg-sky-600 rounded-lg" onClick={() => setShowType("card")}>Card</button>
+                <button
+                    className="p-4 bg-sky-300 hover:bg-sky-600 rounded-lg"
+                    onClick={() => setShowType("table")}
+                >
+                    Table
+                </button>
+
+                <button
+                    className="p-4 bg-sky-300 hover:bg-sky-600 rounded-lg"
+                    onClick={() => setShowType("card")}
+                >
+                    Card
+                </button>
             </div>
 
             <div className="flex justify-between items-center">
@@ -46,7 +61,13 @@ const Home = () => {
                     <MdOutlineAddBox className="text-sky-800 text-4xl" />
                 </Link>
             </div>
-            {loading ? <Spinner /> : showType == "table" ? (<BookTable books={books} />) : (<BookCard books={books} />)}
+            {loading ? (
+                <Spinner />
+            ) : showType == "table" ? (
+                <BookTable books={books} />
+            ) : (
+                <BookCard books={books} />
+            )}
         </div>
     );
 };

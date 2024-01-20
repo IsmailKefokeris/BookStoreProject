@@ -33,6 +33,9 @@ const BookModal = ({ book, onClose }) => {
                     <BiUserCircle className="text-red-300 text-2xl" />
                     <h2 className="my-1">{book.author}</h2>
                 </div>
+                <div className="flex justify-start items-center gap-x-2">
+                    <h2 className="my-1">{book.price}</h2>
+                </div>
                 <h3 className="text-3xl font-bold p-2">Info</h3>
                 <p className=" overflow-auto p-4 m-auto">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.

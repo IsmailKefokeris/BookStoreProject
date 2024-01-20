@@ -7,16 +7,16 @@ import NavBar from "../components/NavBar";
 
 import { useSnackbar } from "notistack";
 
-
 const ShowBook = () => {
     const [book, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const serverURL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+    const serverURL =
+        import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
     const { id } = useParams();
 
-    const {enqueueSnackbar} = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         setLoading(true);
@@ -25,13 +25,12 @@ const ShowBook = () => {
             .then((response) => {
                 setBooks(response.data);
                 setLoading(false);
-                enqueueSnackbar("Book Loaded!", {variant: "success"})
+                enqueueSnackbar("Book Loaded!", { variant: "success" });
             })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
-                enqueueSnackbar("Error loading book!", {variant: "error"})
-
+                enqueueSnackbar("Error loading book!", { variant: "error" });
             });
     }, []);
     return (
@@ -60,6 +59,18 @@ const ShowBook = () => {
                             Author
                         </span>
                         <span>{book.author}</span>
+                    </div>
+                    <div className="my-4">
+                        <span className="text-xl mr-4 text-gray-500">
+                            Quantity
+                        </span>
+                        <span>{book.quantity}</span>
+                    </div>
+                    <div className="my-4">
+                        <span className="text-xl mr-4 text-gray-500">
+                            Price
+                        </span>
+                        <span>{book.price}</span>
                     </div>
                     <div className="my-4">
                         <span className="text-xl mr-4 text-gray-500">
