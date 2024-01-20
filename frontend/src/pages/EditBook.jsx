@@ -12,6 +12,8 @@ import { useSnackbar } from "notistack";
 const EditBook = () => {
     const [title, setTitle] = useState();
     const [author, setAuthor] = useState();
+    const [quantity, setQuantity] = useState();
+    const [price, setPrice] = useState();
     const [publishYear, setPublishYear] = useState();
 
     const [loading, setLoading] = useState(false);
@@ -34,6 +36,8 @@ const EditBook = () => {
             .then((response) => {
                 setTitle(response.data.title);
                 setAuthor(response.data.author);
+                setQuantity(response.data.quantity);
+                setPrice(response.data.price);
                 setPublishYear(response.data.publishYear);
                 setLoading(false);
             })
@@ -51,6 +55,8 @@ const EditBook = () => {
                 title: title,
                 author: author,
                 publishYear: publishYear,
+                quantity: quantity,
+                price: price,
             })
             .then((response) => {
                 console.log(response);
@@ -112,6 +118,38 @@ const EditBook = () => {
                                 type="text"
                                 value={author}
                                 onChange={(e) => setAuthor(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="my-4">
+                            <label
+                                className="block text-gray-700 text-xl font-bold mb-2 mr-4"
+                                htmlFor="quantity"
+                            >
+                                Quantity
+                            </label>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="quantity"
+                                type="number"
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="my-4">
+                            <label
+                                className="block text-gray-700 text-xl font-bold mb-2 mr-4"
+                                htmlFor="quantity"
+                            >
+                                Price
+                            </label>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="quantity"
+                                type="number"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
                             />
                         </div>
 

@@ -1,7 +1,10 @@
 const express = require("express");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
-// const stripe = Stripe(process.env.STRIPE_SECRET);
 const router = express.Router();
 
 // Creating Payment Intent

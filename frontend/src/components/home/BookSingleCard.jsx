@@ -5,12 +5,18 @@ import { BiUserCircle, BiShow } from "react-icons/bi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineDelete } from "react-icons/md";
+import { IoCartSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import BookModal from "./BookModal";
+import { addProduct } from "../../state/cart/cartSlice";
 
 const BookSingleCard = ({ book }) => {
     const [showModal, setShowModal] = useState(false);
+
+    const dispatch = useDispatch();
 
     return (
         <div className="border-2 border-gray-500 rounded-lg px-4 py-2 m-4 relative hover:shadow-xl">
@@ -27,6 +33,9 @@ const BookSingleCard = ({ book }) => {
                 <BiUserCircle className="text-red-300 text-2xl" />
                 <h2 className="my-1">{book.author}</h2>
             </div>
+            <div className="flex justify-start items-center gap-x-2">
+                <h2 className="my-1">{book.price}</h2>
+            </div>
             <div className="flex justify-between items-center gap-x-2 mt-4 p-4">
                 <BiShow
                     className="text-3xl text-blue-800 hover:text-black cursor-pointer"
@@ -41,6 +50,10 @@ const BookSingleCard = ({ book }) => {
                 <Link to={`/books/delete/${book._id}`}>
                     <MdOutlineDelete className="text-red-300 text-2xl hover:text-black" />
                 </Link>
+                <IoCartSharp
+                    className="text-blue-300 text-2xl hover:text-black cursor-pointer"
+                    onClick={() => dispatch(addProduct(book))}
+                />
             </div>
             {showModal && (
                 <BookModal book={book} onClose={() => setShowModal(false)} />
@@ -50,7 +63,7 @@ const BookSingleCard = ({ book }) => {
 };
 
 BookSingleCard.propTypes = {
-    book: PropTypes.array.isRequired,
+    book: PropTypes.object.isRequired,
 };
 
 export default BookSingleCard;
