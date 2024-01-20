@@ -7,6 +7,23 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const router = express.Router();
 
+// Checkout
+router.post("/checkout", async (req, res) => {
+    try {
+        const session = await stripe.checkout.sessions.create({
+            line_items: req.body.line_items,
+            mode: "payment",
+            payment_method_types: ["card"],
+            success_url: `https://book-store-project-frontend-three.vercel.app/shop`,
+            cancel_url: `https://book-store-project-frontend-three.vercel.app/`,
+        });
+        return res.status(200).json(session);
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json(error);
+    }
+});
+
 // Creating Payment Intent
 router.post("/intents", async (req, res) => {
     try {
