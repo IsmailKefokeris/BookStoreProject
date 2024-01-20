@@ -12,6 +12,7 @@ import Shop from "./pages/Shop";
 
 const App = () => {
     return (
+        //My Routes
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<ShoppingCart />} />
