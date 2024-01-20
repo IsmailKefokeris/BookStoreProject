@@ -7,7 +7,7 @@ import EditBook from "./pages/EditBook";
 import ShowBook from "./pages/ShowBook";
 import CreateBook from "./pages/CreateBooks";
 import DeleteBook from "./pages/DeleteBook";
-import ShoppingCart from "./pages/shoppingCart";
+import ShoppingCart from "./pages/ShoppingCart";
 import Shop from "./pages/Shop";
 
 const App = () => {
