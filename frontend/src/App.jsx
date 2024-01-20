@@ -8,12 +8,14 @@ import ShowBook from "./pages/ShowBook";
 import CreateBook from "./pages/CreateBooks";
 import DeleteBook from "./pages/DeleteBook";
 import ShoppingCart from "./pages/shoppingCart";
+import Shop from "./pages/Shop";
 
 const App = () => {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<ShoppingCart />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/books/create" element={<CreateBook />} />
             <Route path="/books/edit/:id" element={<EditBook />} />
             <Route path="/books/details/:id" element={<ShowBook />} />

@@ -13,7 +13,9 @@ const ShoppingCart = () => {
             <NavBar />
             <div className="grid grid-cols-2 gap-4 p-6">
                 <div className=" col-start-1 col-span-1">
-                    <h1>My Cart</h1>
+                    <h1 className="font-bold p-3 text-3xl font-serif">
+                        My Cart
+                    </h1>
                     {cart.products.map((prods) => {
                         return <CartTable key={prods._id} product={prods} />;
                     })}
