@@ -9,6 +9,7 @@ import CreateBook from "./pages/CreateBooks";
 import DeleteBook from "./pages/DeleteBook";
 import ShoppingCart from "./pages/ShoppingCart";
 import Shop from "./pages/Shop";
+import TestCart from "./components/cart/TestCart";
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<ShoppingCart />} />
+            <Route path="/cart2" element={<TestCart />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/books/create" element={<CreateBook />} />
             <Route path="/books/edit/:id" element={<EditBook />} />
