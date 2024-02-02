@@ -9,7 +9,6 @@ import CreateBook from "./pages/CreateBooks";
 import DeleteBook from "./pages/DeleteBook";
 import ShoppingCart from "./pages/ShoppingCart";
 import Shop from "./pages/Shop";
-import TestCart from "./components/cart/TestCart";
 
 const App = () => {
     return (
