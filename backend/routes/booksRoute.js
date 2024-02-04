@@ -20,12 +20,14 @@ router.post("/", async (req, res) => {
                 message: "Date must be between 1500 and 2023",
             });
         }
+        console.log(req.body);
         const newBook = {
             title: req.body.title,
             author: req.body.author,
             publishYear: req.body.publishYear,
             quantity: req.body.quantity,
             price: req.body.price,
+            images: req.body.images,
         };
 
         const book = await Book.create(newBook);

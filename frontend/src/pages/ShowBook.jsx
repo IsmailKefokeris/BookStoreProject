@@ -11,10 +11,10 @@ const ShowBook = () => {
     const [book, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // const serverURL =
-    //     import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+    const serverURL =
+        import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
-    const serverURL = import.meta.env.VITE_SERVER_URL || "http://13.40.226.37";
+    // const serverURL = import.meta.env.VITE_SERVER_URL || "http://13.40.226.37";
 
     const { id } = useParams();
 

@@ -7,7 +7,7 @@ const { s3Uploadv2, s3Uploadv3 } = require("../services/s3Service");
 
 const router = express.Router();
 
-// Custom Names for uploads
+// Custom Names for uploads & Storage into Disk
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
 //         cb(null, "uploads/");
@@ -50,7 +50,7 @@ router.post("/upload-multiple", upload.array("image", 5), async (req, res) => {
     try {
         const results = await s3Uploadv3(req.files);
         // const results = await s3Uploadv2(req.files);
-        return res.json({ message: "File Uploaded", results });
+        return res.status(200).json({ message: "File Uploaded", results });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
