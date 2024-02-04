@@ -59,13 +59,11 @@ exports.s3Uploadv3 = async (files) => {
         };
     });
 
-    // const results = await s3client.send(new PutObjectCommand(params));
+    const results = await Promise.all(
+        params.map((param) => s3client.send(new PutObjectCommand(param)))
+    );
 
-    // const results = await Promise.all(
-    //     params.map((param) => s3client.send(new PutObjectCommand(param)))
-    // );
-
-    const results = "YAY"; // Comment this out and then uncomment the line above for real results.
+    // const results = "YAY"; // Comment this out and then uncomment the line above for real results.
 
     // SAVE URL TO DATABASE HERE
     console.log(`Save files to Database with URLs: ${urls}`);
