@@ -16,9 +16,16 @@ const CreateBooks = () => {
     const [price, setPrice] = useState();
     const [publishYear, setPublishYear] = useState();
 
+    const [files, setFiles] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     const [error, setError] = useState("");
+
+    var url;
+
+    // const serverURL =
+    //     import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
     const serverURL =
         import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
@@ -26,8 +33,44 @@ const CreateBooks = () => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
-    const handleSubmit = () => {
+    const fileChangeHandler = (e) => {
+        setFiles(e.target.files);
+    };
+
+    // console.log("FILES: ", files);
+
+    const handleSubmit = async () => {
         setLoading(true);
+
+        // RETRIEVE IMAGES FROM FORM
+
+        const data = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+            data.append("image", files[i]);
+        }
+
+        // TODO: UPLOAD IMAGES TO S3
+
+        const response = await axios
+            .post(`${serverURL}/upload/upload-multiple`, data)
+            .then((response) => {
+                enqueueSnackbar(response.data.message, {
+                    variant: "success",
+                });
+
+                url = response.data.results.Locations;
+            })
+            .catch((error) => {
+                console.log(error.message);
+                return enqueueSnackbar("Error Uploading Images!", {
+                    variant: "error",
+                });
+            });
+
+        console.log("URL: ", url);
+
+        // CREATE BOOK
         axios
             .post(`${serverURL}/books`, {
                 title: title,
@@ -35,21 +78,86 @@ const CreateBooks = () => {
                 publishYear: publishYear,
                 quantity: quantity,
                 price: price,
+                images: url,
             })
-            .then((response) => {
-                console.log(response);
+            .then((res) => {
                 setLoading(false);
                 enqueueSnackbar("Book Created Successfully!", {
                     variant: "success",
                 });
-                navigate(`/books/details/${response.data._id}`);
+                navigate(`/books/details/${res.data._id}`);
             })
             .catch((error) => {
                 setLoading(false);
-                console.log(error);
-                enqueueSnackbar("Error Creating Book!", { variant: "error" });
+                enqueueSnackbar("Error Creating Book!", {
+                    variant: "error",
+                });
                 setError(error.response.data.message);
             });
+
+        // axios
+        //     .post(`${serverURL}/upload/upload-multiple`, data)
+        //     .then((response) => {
+        //         enqueueSnackbar(response.data.message, {
+        //             variant: "success",
+        //         });
+
+        //         // CREATE BOOK
+        //         axios
+        //             .post(`${serverURL}/books`, {
+        //                 title: title,
+        //                 author: author,
+        //                 publishYear: publishYear,
+        //                 quantity: quantity,
+        //                 price: price,
+        //                 images: response.data.results.Locations,
+        //             })
+        //             .then((res) => {
+        //                 setLoading(false);
+        //                 enqueueSnackbar("Book Created Successfully!", {
+        //                     variant: "success",
+        //                 });
+        //                 navigate(`/books/details/${res.data._id}`);
+        //             })
+        //             .catch((error) => {
+        //                 setLoading(false);
+        //                 enqueueSnackbar("Error Creating Book!", {
+        //                     variant: "error",
+        //                 });
+        //                 setError(error.response.data.message);
+        //             });
+        //         // setImageURL(response.data.results.Locations);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.message);
+        //         return enqueueSnackbar("Error Uploading Images!", {
+        //             variant: "error",
+        //         });
+        //     });
+
+        // CREATE BOOK
+
+        // axios
+        //     .post(`${serverURL}/books`, {
+        //         title: title,
+        //         author: author,
+        //         publishYear: publishYear,
+        //         quantity: quantity,
+        //         price: price,
+        //         images: [...imageURL],
+        //     })
+        //     .then((response) => {
+        //         setLoading(false);
+        //         enqueueSnackbar("Book Created Successfully!", {
+        //             variant: "success",
+        //         });
+        //         navigate(`/books/details/${response.data._id}`);
+        //     })
+        //     .catch((error) => {
+        //         setLoading(false);
+        //         enqueueSnackbar("Error Creating Book!", { variant: "error" });
+        //         setError(error.response.data.message);
+        //     });
     };
 
     return (
@@ -146,6 +254,23 @@ const CreateBooks = () => {
                                 max="2024"
                                 step="1"
                                 onChange={(e) => setPublishYear(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="my-4">
+                            <label
+                                className="block text-gray-700 text-xl font-bold mb-2 mr-4"
+                                htmlFor="image"
+                            >
+                                Images
+                            </label>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="image"
+                                name="image"
+                                type="file"
+                                multiple
+                                onChange={fileChangeHandler}
                             />
                         </div>
 

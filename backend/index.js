@@ -20,6 +20,7 @@ const cors = require("cors");
 const Book = require("./models/bookModel");
 const booksRoute = require("./routes/booksRoute.js");
 const paymentsRoute = require("./routes/paymentsRoute.js");
+const uploadsRoute = require("./routes/uploadsRoute.js");
 
 dotenv.config();
 
@@ -52,6 +53,8 @@ app.get("/", (req, res) => {
 app.use("/books", booksRoute);
 
 app.use("/payments", paymentsRoute);
+
+app.use("/upload", uploadsRoute);
 
 mongoose
     .connect(MONGODBURL)

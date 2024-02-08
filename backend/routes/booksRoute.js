@@ -1,6 +1,7 @@
 // import express from "express";
 // import { Book } from "../models/bookModel.js";
 
+const axios = require("axios");
 const express = require("express");
 const Book = require("../models/bookModel");
 
@@ -20,12 +21,14 @@ router.post("/", async (req, res) => {
                 message: "Date must be between 1500 and 2023",
             });
         }
+        console.log(req.body);
         const newBook = {
             title: req.body.title,
             author: req.body.author,
             publishYear: req.body.publishYear,
             quantity: req.body.quantity,
             price: req.body.price,
+            images: req.body.images,
         };
 
         const book = await Book.create(newBook);
@@ -101,9 +104,10 @@ router.delete("/:id", async (req, res) => {
             return res.status(404).send({ message: "Book not Found" });
         }
 
-        return res
-            .status(200)
-            .send({ message: `The Book  ${result.title}  has been Deleted!` });
+        return res.status(200).send({
+            message: `The Book  ${result.title}  has been Deleted!`,
+            result,
+        });
     } catch (error) {
         console.log(error.message);
         res.status(500).send({ message: error.message });

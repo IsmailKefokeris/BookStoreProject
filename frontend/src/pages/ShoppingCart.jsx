@@ -15,6 +15,8 @@ const ShoppingCart = () => {
     const serverURL =
         import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
+    // const serverURL = import.meta.env.VITE_SERVER_URL || "http://13.40.226.37";
+
     const STRIPE_KEY =
         "pk_test_51OUDlLB0Nb68w01k5N1oCiHLwd8BfW1Dtg9u13rgjIMAApwO0V6VFZBzDnwNZMH1Y3mxGKItOBgztegMkdzCzsPF003c5oH8q0";
 
