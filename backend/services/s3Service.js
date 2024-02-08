@@ -2,7 +2,11 @@ const { S3 } = require("aws-sdk");
 const uuid = require("uuid").v4;
 
 //Imports for V3 AWS S3
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const {
+    S3Client,
+    PutObjectCommand,
+    DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
 
 exports.s3Uploadv2 = async (files) => {
     const s3 = new S3(); // REmember to update credentials in the env variables
@@ -69,4 +73,28 @@ exports.s3Uploadv3 = async (files) => {
     console.log(`Save files to Database with URLs: ${urls}`);
 
     return { results, Locations: urls };
+};
+
+exports.s3DeleteV3 = async (file_names) => {
+    const s3client = new S3Client();
+
+    // const params = {
+    //     Bucket: process.env.AWS_BUCKET_NAME,
+    //     Key: `test-uploads/${file_name}`,
+    // };
+
+    const params = file_names.map((file_name) => {
+        return {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: `test-uploads/${file_name}`,
+        };
+    });
+
+    const results = await Promise.all(
+        params.map((param) => s3client.send(new DeleteObjectCommand(param)))
+    );
+
+    // const results = await s3client.send(new DeleteObjectCommand(params));
+
+    return results;
 };

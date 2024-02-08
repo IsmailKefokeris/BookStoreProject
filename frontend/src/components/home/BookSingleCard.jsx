@@ -9,12 +9,16 @@ import { IoCartSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 import BookModal from "./BookModal";
 import { addProduct } from "../../state/cart/cartSlice";
 
 const BookSingleCard = ({ book }) => {
     const [showModal, setShowModal] = useState(false);
+
+    const serverURL =
+        import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
     const dispatch = useDispatch();
 

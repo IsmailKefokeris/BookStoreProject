@@ -1,6 +1,7 @@
 // import express from "express";
 // import { Book } from "../models/bookModel.js";
 
+const axios = require("axios");
 const express = require("express");
 const Book = require("../models/bookModel");
 
@@ -103,9 +104,10 @@ router.delete("/:id", async (req, res) => {
             return res.status(404).send({ message: "Book not Found" });
         }
 
-        return res
-            .status(200)
-            .send({ message: `The Book  ${result.title}  has been Deleted!` });
+        return res.status(200).send({
+            message: `The Book  ${result.title}  has been Deleted!`,
+            result,
+        });
     } catch (error) {
         console.log(error.message);
         res.status(500).send({ message: error.message });

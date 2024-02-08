@@ -3,7 +3,7 @@ const express = require("express");
 const { error } = require("firebase-functions/logger");
 
 const multer = require("multer");
-const { s3Uploadv2, s3Uploadv3 } = require("../services/s3Service");
+const { s3Uploadv2, s3Uploadv3, s3DeleteV3 } = require("../services/s3Service");
 
 const router = express.Router();
 
@@ -56,6 +56,16 @@ router.post("/upload-multiple", upload.array("image", 5), async (req, res) => {
     }
 });
 
+//Delete File
+router.delete("/delete", async (req, res) => {
+    try {
+        const results = await s3DeleteV3(req.body.key);
+        return res.status(200).json({ message: "File Deleted", results });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+});
+
 // Multiple Fields Upload
 const multiUpload = upload.fields([
     { name: "thumbnail", maxCount: 5 },
@@ -65,11 +75,6 @@ const multiUpload = upload.fields([
 
 router.post("/one-product-upload-multiple", multiUpload, (req, res) => {
     console.log(req.files);
-    res.json({ message: "File Uploaded" });
-});
-
-// Custom Names for uploads
-router.post("/upload-custom-name", upload.array("image", 5), (req, res) => {
     res.json({ message: "File Uploaded" });
 });
 

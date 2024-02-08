@@ -22,9 +22,11 @@ const DeleteBook = () => {
 
     // const serverURL = import.meta.env.VITE_SERVER_URL || "http://13.40.226.37";
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         setLoading(true);
-        axios
+        var result;
+
+        const res = await axios
             .delete(`${serverURL}/books/${id}`)
             .then((response) => {
                 setResponse(response.data.message);
@@ -33,14 +35,65 @@ const DeleteBook = () => {
                 enqueueSnackbar("Book Deleted Successfully!", {
                     variant: "success",
                 });
-                navigate(`/`);
+                result = response;
             })
             .catch((error) => {
                 console.log(error);
                 setLoading(false);
                 enqueueSnackbar("Error Deleting Book!", { variant: "error" });
             });
+
+        console.log("RESULT:", result);
+
+        const imagesArray = result.data.result.images;
+        var newImageArray = [];
+
+        imagesArray.forEach((image) => {
+            // console.log(image.split("/"));
+            newImageArray.push(image.split("/")[4]);
+        });
+
+        console.log("IMAGE ARRAY ", newImageArray);
+
+        if (newImageArray.length > 0) {
+            axios
+                .delete(`${serverURL}/upload/delete`, {
+                    data: { key: newImageArray },
+                })
+                .then((response) => {
+                    console.log(response);
+                    navigate(`/`);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    console.log("IMAGES: ", newImageArray);
+                    enqueueSnackbar(
+                        "Error Deleting Book Image (CONTACT DEVELOPER)!",
+                        { variant: "error" }
+                    );
+                });
+        }
     };
+
+    // const handleDelete = () => {
+    //     setLoading(true);
+    //     axios
+    //         .delete(`${serverURL}/books/${id}`)
+    //         .then((response) => {
+    //             setResponse(response.data.message);
+    //             // alert(response.data.message);
+    //             setLoading(false);
+    //             enqueueSnackbar("Book Deleted Successfully!", {
+    //                 variant: "success",
+    //             });
+    //             navigate(`/`);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setLoading(false);
+    //             enqueueSnackbar("Error Deleting Book!", { variant: "error" });
+    //         });
+    //};
 
     return (
         <div className="p-4">

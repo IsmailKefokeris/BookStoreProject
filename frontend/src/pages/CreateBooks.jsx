@@ -22,6 +22,8 @@ const CreateBooks = () => {
 
     const [error, setError] = useState("");
 
+    var url;
+
     // const serverURL =
     //     import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
 
@@ -49,38 +51,15 @@ const CreateBooks = () => {
         }
 
         // TODO: UPLOAD IMAGES TO S3
-        axios
+
+        const response = await axios
             .post(`${serverURL}/upload/upload-multiple`, data)
             .then((response) => {
                 enqueueSnackbar(response.data.message, {
                     variant: "success",
                 });
 
-                // CREATE BOOK
-                axios
-                    .post(`${serverURL}/books`, {
-                        title: title,
-                        author: author,
-                        publishYear: publishYear,
-                        quantity: quantity,
-                        price: price,
-                        images: response.data.results.Locations,
-                    })
-                    .then((res) => {
-                        setLoading(false);
-                        enqueueSnackbar("Book Created Successfully!", {
-                            variant: "success",
-                        });
-                        navigate(`/books/details/${res.data._id}`);
-                    })
-                    .catch((error) => {
-                        setLoading(false);
-                        enqueueSnackbar("Error Creating Book!", {
-                            variant: "error",
-                        });
-                        setError(error.response.data.message);
-                    });
-                // setImageURL(response.data.results.Locations);
+                url = response.data.results.Locations;
             })
             .catch((error) => {
                 console.log(error.message);
@@ -88,6 +67,73 @@ const CreateBooks = () => {
                     variant: "error",
                 });
             });
+
+        console.log("URL: ", url);
+
+        // CREATE BOOK
+        axios
+            .post(`${serverURL}/books`, {
+                title: title,
+                author: author,
+                publishYear: publishYear,
+                quantity: quantity,
+                price: price,
+                images: url,
+            })
+            .then((res) => {
+                setLoading(false);
+                enqueueSnackbar("Book Created Successfully!", {
+                    variant: "success",
+                });
+                navigate(`/books/details/${res.data._id}`);
+            })
+            .catch((error) => {
+                setLoading(false);
+                enqueueSnackbar("Error Creating Book!", {
+                    variant: "error",
+                });
+                setError(error.response.data.message);
+            });
+
+        // axios
+        //     .post(`${serverURL}/upload/upload-multiple`, data)
+        //     .then((response) => {
+        //         enqueueSnackbar(response.data.message, {
+        //             variant: "success",
+        //         });
+
+        //         // CREATE BOOK
+        //         axios
+        //             .post(`${serverURL}/books`, {
+        //                 title: title,
+        //                 author: author,
+        //                 publishYear: publishYear,
+        //                 quantity: quantity,
+        //                 price: price,
+        //                 images: response.data.results.Locations,
+        //             })
+        //             .then((res) => {
+        //                 setLoading(false);
+        //                 enqueueSnackbar("Book Created Successfully!", {
+        //                     variant: "success",
+        //                 });
+        //                 navigate(`/books/details/${res.data._id}`);
+        //             })
+        //             .catch((error) => {
+        //                 setLoading(false);
+        //                 enqueueSnackbar("Error Creating Book!", {
+        //                     variant: "error",
+        //                 });
+        //                 setError(error.response.data.message);
+        //             });
+        //         // setImageURL(response.data.results.Locations);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.message);
+        //         return enqueueSnackbar("Error Uploading Images!", {
+        //             variant: "error",
+        //         });
+        //     });
 
         // CREATE BOOK
 
